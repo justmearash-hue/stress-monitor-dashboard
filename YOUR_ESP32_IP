@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Stress Monitor</title>
+</head>
+<body style="background:black;color:white;text-align:center;">
+
+<h1>Stress Monitor Dashboard</h1>
+
+<p id="hr">HR: --</p>
+<p id="hrv">HRV: --</p>
+<p id="gsr">GSR: --</p>
+<p id="stress">Stress: --</p>
+
+<script>
+const ws = new WebSocket("ws://YOUR_ESP32_IP:81");
+
+ws.onmessage = function(event) {
+  const data = JSON.parse(event.data);
+
+  document.getElementById("hr").innerText = "HR: " + data.hr;
+  document.getElementById("hrv").innerText = "HRV: " + data.rmssd;
+  document.getElementById("gsr").innerText = "GSR: " + data.phasic;
+  document.getElementById("stress").innerText = "Stress: " + data.stress;
+};
+</script>
+
+</body>
+</html>
